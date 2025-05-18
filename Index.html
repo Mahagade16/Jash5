@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jash Tool - All-in-One Web Tools</title>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #fd7e14;
+            --info-color: #17a2b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), #6a11cb);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-icon {
+            height: 120px;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .tool-info {
+            padding: 20px;
+        }
+        
+        .tool-info h3 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .tool-info p {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #3a56d4;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .tool-container {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+        
+        .tool-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tool-header h2 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .tool-header p {
+            color: var(--secondary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+        
+        .result-title {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jash Tool</h1>
+            <p>Your all-in-one web tools collection for developers and marketers</p>
+        </header>
+        
+        <div class="tools-grid" id="mainMenu">
+            <!-- Image Resizer -->
+            <div class="tool-card" onclick="showTool('image-resizer')">
+                <div class="tool-icon">
+                    <i>🖼️</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Image Resizer</h3>
+                    <p>Resize your JPG, PNG images with high quality options. Adjust height and width as needed.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Website Speed Checker -->
+            <div class="tool-card" onclick="showTool('speed-checker')">
+                <div class="tool-icon">
+                    <i>⚡</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Website Speed Checker</h3>
+                    <p>Check your website or page loading speed and get recommendations for improvement.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Hashtag Generator -->
+            <div class="tool-card" onclick="showTool('hashtag-generator')">
+                <div class="tool-icon">
+                    <i>#️⃣</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Hashtag Generator</h3>
+                    <p>Generate trending hashtags for all social media platforms to boost your engagement.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Text to PDF -->
+            <div class="tool-card" onclick="showTool('text-to-pdf')">
+                <div class="tool-icon">
+                    <i>📄</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Text to PDF Compressor</h3>
+                    <p>Convert your text documents to PDF format with compression options to reduce file size.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Age Calculator -->
+            <div class="tool-card" onclick="showTool('age-calculator')">
+                <div class="tool-icon">
+                    <i>🎂</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Age Calculator</h3>
+                    <p>Calculate exact age in years, months, and days from birth date to current date.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Text Case Converter -->
+            <div class="tool-card" onclick="showTool('case-converter')">
+                <div class="tool-icon">
+                    <i>🔠</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Text Case Converter</h3>
+                    <p>Convert text between different cases like uppercase, lowercase, sentence case, etc.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Meta Tag Generator -->
+            <div class="tool-card" onclick="showTool('meta-tag-generator')">
+                <div class="tool-icon">
+                    <i>🏷️</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Meta Tag Generator</h3>
+                    <p>Generate SEO-friendly meta tags for your website to improve search engine visibility.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Robots.txt Generator -->
+            <div class="tool-card" onclick="showTool('robots-generator')">
+                <div class="tool-icon">
+                    <i>🤖</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Robots.txt Generator</h3>
+                    <p>Create a custom robots.txt file to control search engine crawlers on your website.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- XML Sitemap Generator -->
+            <div class="tool-card" onclick="showTool('sitemap-generator')">
+                <div class="tool-icon">
+                    <i>🗺️</i>
+                </div>
+                <div class="tool-info">
+                    <h3>XML Sitemap Generator</h3>
+                    <p>Generate XML sitemaps for your website to help search engines index your pages.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+            
+            <!-- Google Index Checker -->
+            <div class="tool-card" onclick="showTool('index-checker')">
+                <div class="tool-icon">
+                    <i>🔍</i>
+                </div>
+                <div class="tool-info">
+                    <h3>Google Index Checker</h3>
+                    <p>Check if your website or specific pages are indexed by Google search engine.</p>
+                    <a class="btn btn-block">Open Tool</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Image Resizer Tool -->
+        <div class="tool-container" id="image-resizer">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Image Resizer</h2>
+                <p>Resize your JPG, PNG, or other image files while maintaining high quality. Adjust the dimensions to fit your needs.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="image-upload">Upload Image</label>
+                <input type="file" id="image-upload" class="form-control" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="image-width">Width (pixels)</label>
+                <input type="number" id="image-width" class="form-control" placeholder="Enter width in pixels">
+            </div>
+            
+            <div class="form-group">
+                <label for="image-height">Height (pixels)</label>
+                <input type="number" id="image-height" class="form-control" placeholder="Enter height in pixels">
+            </div>
+            
+            <div class="form-group">
+                <label for="image-quality">Quality (1-100)</label>
+                <input type="range" id="image-quality" class="form-control" min="1" max="100" value="90">
+                <span id="quality-value">90%</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="image-format">Output Format</label>
+                <select id="image-format" class="form-control">
+                    <option value="jpg">JPG</option>
+                    <option value="png">PNG</option>
+                    <option value="webp">WebP</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="resizeImage()">Resize Image</button>
+            
+            <div class="result-container" id="image-resizer-result">
+                <h4 class="result-title">Resized Image</h4>
+                <div id="resized-image-container"></div>
+                <a id="download-link" class="btn" style="margin-top: 15px;">Download Image</a>
+            </div>
+        </div>
+        
+        <!-- Website Speed Checker Tool -->
+        <div class="tool-container" id="speed-checker">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Website Speed Checker</h2>
+                <p>Check the loading speed of any website and get detailed analysis with improvement suggestions.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="website-url">Website URL</label>
+                <input type="url" id="website-url" class="form-control" placeholder="https://example.com">
+            </div>
+            
+            <button class="btn" onclick="checkWebsiteSpeed()">Check Speed</button>
+            
+            <div class="result-container" id="speed-checker-result">
+                <h4 class="result-title">Speed Test Results</h4>
+                <div id="speed-test-results"></div>
+            </div>
+        </div>
+        
+        <!-- Hashtag Generator Tool -->
+        <div class="tool-container" id="hashtag-generator">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Social Media Hashtag Generator</h2>
+                <p>Generate trending and relevant hashtags for Instagram, Twitter, Facebook, and other platforms.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="hashtag-keyword">Keyword/Topic</label>
+                <input type="text" id="hashtag-keyword" class="form-control" placeholder="Enter your keyword or topic">
+            </div>
+            
+            <div class="form-group">
+                <label for="hashtag-platform">Social Platform</label>
+                <select id="hashtag-platform" class="form-control">
+                    <option value="instagram">Instagram</option>
+                    <option value="twitter">Twitter</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="all">All Platforms</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="hashtag-count">Number of Hashtags (5-30)</label>
+                <input type="number" id="hashtag-count" class="form-control" min="5" max="30" value="15">
+            </div>
+            
+            <button class="btn" onclick="generateHashtags()">Generate Hashtags</button>
+            
+            <div class="result-container" id="hashtag-generator-result">
+                <h4 class="result-title">Generated Hashtags</h4>
+                <div id="generated-hashtags"></div>
+                <button class="btn" onclick="copyHashtags()" style="margin-top: 15px;">Copy Hashtags</button>
+            </div>
+        </div>
+        
+        <!-- Text to PDF Tool -->
+        <div class="tool-container" id="text-to-pdf">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Text to PDF Compressor</h2>
+                <p>Convert your text content to PDF format with options to compress the file size.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="pdf-text">Enter Your Text</label>
+                <textarea id="pdf-text" class="form-control" rows="10" placeholder="Paste your text here..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="pdf-title">Document Title (optional)</label>
+                <input type="text" id="pdf-title" class="form-control" placeholder="My Document">
+            </div>
+            
+            <div class="form-group">
+                <label for="pdf-compression">Compression Level</label>
+                <select id="pdf-compression" class="form-control">
+                    <option value="low">Low (Best Quality)</option>
+                    <option value="medium" selected>Medium (Balanced)</option>
+                    <option value="high">High (Smallest Size)</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="generatePDF()">Generate PDF</button>
+            
+            <div class="result-container" id="pdf-generator-result">
+                <h4 class="result-title">PDF Generated</h4>
+                <div id="pdf-download-info"></div>
+                <a id="pdf-download-link" class="btn" style="margin-top: 15px;">Download PDF</a>
+            </div>
+        </div>
+        
+        <!-- Age Calculator Tool -->
+        <div class="tool-container" id="age-calculator">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Age Calculator</h2>
+                <p>Calculate your exact age in years, months, and days from your birth date to the current date.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="birth-date">Birth Date</label>
+                <input type="date" id="birth-date" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="current-date">Current Date (or select another date)</label>
+                <input type="date" id="current-date" class="form-control">
+            </div>
+            
+            <button class="btn" onclick="calculateAge()">Calculate Age</button>
+            
+            <div class="result-container" id="age-calculator-result">
+                <h4 class="result-title">Age Calculation Results</h4>
+                <div id="age-result"></div>
+            </div>
+        </div>
+        
+        <!-- Text Case Converter Tool -->
+        <div class="tool-container" id="case-converter">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Text Case Converter</h2>
+                <p>Convert your text between different cases like uppercase, lowercase, sentence case, and more.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="case-text">Enter Your Text</label>
+                <textarea id="case-text" class="form-control" rows="6" placeholder="Enter text to convert..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="case-type">Conversion Type</label>
+                <select id="case-type" class="form-control">
+                    <option value="upper">UPPERCASE</option>
+                    <option value="lower">lowercase</option>
+                    <option value="sentence">Sentence case</option>
+                    <option value="title">Title Case</option>
+                    <option value="camel">camelCase</option>
+                    <option value="pascal">PascalCase</option>
+                    <option value="snake">snake_case</option>
+                    <option value="kebab">kebab-case</option>
+                    <option value="alternating">aLtErNaTiNg cAsE</option>
+                    <option value="inverse">iNVERSE cASE</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="convertTextCase()">Convert Text</button>
+            
+            <div class="result-container" id="case-converter-result">
+                <h4 class="result-title">Converted Text</h4>
+                <div id="converted-text" style="padding: 15px; background: white; border-radius: 5px; border: 1px solid #eee;"></div>
+                <button class="btn" onclick="copyConvertedText()" style="margin-top: 15px;">Copy Text</button>
+            </div>
+        </div>
+        
+        <!-- Meta Tag Generator Tool -->
+        <div class="tool-container" id="meta-tag-generator">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Meta Tag Generator</h2>
+                <p>Generate SEO-friendly meta tags for your website to improve search engine visibility.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="meta-title">Page Title</label>
+                <input type="text" id="meta-title" class="form-control" placeholder="My Awesome Web Page">
+            </div>
+            
+            <div class="form-group">
+                <label for="meta-description">Meta Description</label>
+                <textarea id="meta-description" class="form-control" rows="3" placeholder="Brief description of your page content (150-160 characters)"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="meta-keywords">Keywords (comma separated)</label>
+                <input type="text" id="meta-keywords" class="form-control" placeholder="web, tools, seo, generator">
+            </div>
+            
+            <div class="form-group">
+                <label for="meta-author">Author (optional)</label>
+                <input type="text" id="meta-author" class="form-control" placeholder="Your Name">
+            </div>
+            
+            <div class="form-group">
+                <label for="meta-viewport">Viewport Settings</label>
+                <select id="meta-viewport" class="form-control">
+                    <option value="responsive">Responsive (Recommended)</option>
+                    <option value="desktop">Desktop Fixed Width</option>
+                    <option value="mobile">Mobile Optimized</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="custom-viewport-group" style="display: none;">
+                <label for="custom-viewport">Custom Viewport</label>
+                <input type="text" id="custom-viewport" class="form-control" placeholder="width=device-width, initial-scale=1.0">
+            </div>
+            
+            <button class="btn" onclick="generateMetaTags()">Generate Meta Tags</button>
+            
+            <div class="result-container" id="meta-tag-generator-result">
+                <h4 class="result-title">Generated Meta Tags</h4>
+                <pre id="generated-meta-tags" style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
+                <button class="btn" onclick="copyMetaTags()" style="margin-top: 15px;">Copy Meta Tags</button>
+            </div>
+        </div>
+        
+        <!-- Robots.txt Generator Tool -->
+        <div class="tool-container" id="robots-generator">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Robots.txt Generator</h2>
+                <p>Create a custom robots.txt file to control search engine crawlers on your website.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="robots-sitemap">Sitemap URL (optional)</label>
+                <input type="url" id="robots-sitemap" class="form-control" placeholder="https://example.com/sitemap.xml">
+            </div>
+            
+            <div class="form-group">
+                <label>User-agent Rules</label>
+                <div id="robots-rules-container">
+                    <div class="robots-rule">
+                        <select class="form-control robots-user-agent" style="margin-bottom: 10px;">
+                            <option value="*">All User-agents (*)</option>
+                            <option value="Googlebot">Googlebot</option>
+                            <option value="Bingbot">Bingbot</option>
+                            <option value="Slurp">Yahoo Slurp</option>
+                            <option value="DuckDuckBot">DuckDuckBot</option>
+                            <option value="Baiduspider">Baiduspider</option>
+                            <option value="YandexBot">YandexBot</option>
+                        </select>
+                        <div class="form-check" style="margin-bottom: 10px;">
+                            <input class="form-check-input" type="radio" name="rule-type-0" value="allow" checked>
+                            <label class="form-check-label">Allow</label>
+                        </div>
+                        <div class="form-check" style="margin-bottom: 10px;">
+                            <input class="form-check-input" type="radio" name="rule-type-0" value="disallow">
+                            <label class="form-check-label">Disallow</label>
+                        </div>
+                        <input type="text" class="form-control robots-path" placeholder="/path/">
+                        <button class="btn btn-sm" onclick="removeRobotsRule(this)" style="margin-top: 5px; background-color: var(--danger-color);">Remove Rule</button>
+                    </div>
+                </div>
+                <button class="btn" onclick="addRobotsRule()" style="margin-top: 10px; background-color: var(--success-color);">Add Another Rule</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="robots-crawl-delay">Crawl-delay (seconds, optional)</label>
+                <input type="number" id="robots-crawl-delay" class="form-control" placeholder="10">
+            </div>
+            
+            <button class="btn" onclick="generateRobotsTxt()">Generate robots.txt</button>
+            
+            <div class="result-container" id="robots-generator-result">
+                <h4 class="result-title">Generated robots.txt</h4>
+                <pre id="generated-robots-txt" style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
+                <button class="btn" onclick="copyRobotsTxt()" style="margin-top: 15px;">Copy robots.txt</button>
+                <a id="robots-download-link" class="btn" style="margin-top: 15px; background-color: var(--info-color);">Download robots.txt</a>
+            </div>
+        </div>
+        
+        <!-- XML Sitemap Generator Tool -->
+        <div class="tool-container" id="sitemap-generator">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>XML Sitemap Generator</h2>
+                <p>Generate XML sitemaps for your website to help search engines index your pages.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="sitemap-urls">Enter URLs (one per line)</label>
+                <textarea id="sitemap-urls" class="form-control" rows="10" placeholder="https://example.com/page1
+https://example.com/page2
+https://example.com/page3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="sitemap-priority">Default Priority (0.1-1.0)</label>
+                <input type="number" id="sitemap-priority" class="form-control" min="0.1" max="1.0" step="0.1" value="0.5">
+            </div>
+            
+            <div class="form-group">
+                <label for="sitemap-change-freq">Default Change Frequency</label>
+                <select id="sitemap-change-freq" class="form-control">
+                    <option value="always">always</option>
+                    <option value="hourly">hourly</option>
+                    <option value="daily">daily</option>
+                    <option value="weekly" selected>weekly</option>
+                    <option value="monthly">monthly</option>
+                    <option value="yearly">yearly</option>
+                    <option value="never">never</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="generateSitemap()">Generate Sitemap</button>
+            
+            <div class="result-container" id="sitemap-generator-result">
+                <h4 class="result-title">Generated XML Sitemap</h4>
+                <pre id="generated-sitemap" style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
+                <button class="btn" onclick="copySitemap()" style="margin-top: 15px;">Copy Sitemap</button>
+                <a id="sitemap-download-link" class="btn" style="margin-top: 15px; background-color: var(--info-color);">Download Sitemap</a>
+            </div>
+        </div>
+        
+        <!-- Google Index Checker Tool -->
+        <div class="tool-container" id="index-checker">
+            <a class="back-btn" onclick="showMainMenu()">← Back to All Tools</a>
+            <div class="tool-header">
+                <h2>Google Index Checker</h2>
+                <p>Check if your website or specific pages are indexed by Google search engine.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="index-url">URL to Check</label>
+                <input type="url" id="index-url" class="form-control" placeholder="https://example.com/page">
+            </div>
+            
+            <button class="btn" onclick="checkGoogleIndex()">Check Index Status</button>
+            
+            <div class="result-container" id="index-checker-result">
+                <h4 class="result-title">Index Check Results</h4>
+                <div id="index-check-results"></div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Jash Tool - All-in-One Web Tools Collection. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Show main menu and hide all tools
+        function showMainMenu() {
+            document.getElementById('mainMenu').style.display = 'grid';
+            const tools = document.querySelectorAll('.tool-container');
+            tools.forEach(tool => {
+                tool.style.display = 'none';
+            });
+        }
+        
+        // Show specific tool and hide main menu
+        function showTool(toolId) {
+            document.getElementById('mainMenu').style.display = 'none';
+            const tools = document.querySelectorAll('.tool-container');
+            tools.forEach(tool => {
+                tool.style.display = 'none';
+            });
+            document.getElementById(toolId).style.display = 'block';
+            
+            // Scroll to top of the tool
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Image Resizer functionality
+        function resizeImage() {
+            const fileInput = document.getElementById('image-upload');
+            const width = document.getElementById('image-width').value;
+            const height = document.getElementById('image-height').value;
+            const quality = document.getElementById('image-quality').value;
+            const format = document.getElementById('image-format').value;
+            
+            if (!fileInput.files[0]) {
+                alert('Please upload an image first');
+                return;
+            }
+            
+            if (!width && !height) {
+                alert('Please enter either width or height');
+                return;
+            }
+            
+            // In a real implementation, you would use a library like canvas to resize the image
+            // This is just a placeholder for the demo
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                
+                img.onload = function() {
+                    const resizedImageContainer = document.getElementById('resized-image-container');
+                    resizedImageContainer.innerHTML = '';
+                    resizedImageContainer.appendChild(img);
+                    
+                    // Show download button (in real implementation, this would be the actual resized image)
+                    const downloadLink = document.getElementById('download-link');
+                    downloadLink.href = e.target.result;
+                    downloadLink.download = `resized-image.${format}`;
+                    
+                    // Show result container
+                    document.getElementById('image-resizer-result').style.display = 'block';
+                };
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // Update quality value display
+        document.getElementById('image-quality').addEventListener('input', function() {
+            document.getElementById('quality-value').textContent = this.value + '%';
+        });
+        
+        // Website Speed Checker functionality
+        function checkWebsiteSpeed() {
+            const url = document.getElementById('website-url').value;
+            
+            if (!url) {
+                alert('Please enter a website URL');
+                return;
+            }
+            
+            // In a real implementation, you would call an API to check website speed
+            // This is just a placeholder for the demo
+            document.getElementById('speed-test-results').innerHTML = `
+                <p>Testing speed for: ${url}</p>
+                <div style="margin-top: 15px;">
+                    <p><strong>Load Time:</strong> 1.8 seconds</p>
+                    <p><strong>Page Size:</strong> 1.2 MB</p>
+                    <p><strong>Requests:</strong> 42</p>
+                    <p><strong>Performance Grade:</strong> B (85/100)</p>
+                </div>
+                <div style="margin-top: 20px; background: #f0f0f0; padding: 15px; border-radius: 5px;">
+                    <h5 style="margin-bottom: 10px;">Recommendations:</h5>
+                    <ul>
+                        <li>Compress images to reduce size by ~400KB</li>
+                        <li>Enable browser caching</li>
+                        <li>Minify CSS and JavaScript files</li>
+                        <li>Use a CDN for static assets</li>
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('speed-checker-result').style.display = 'block';
+        }
+        
+        // Hashtag Generator functionality
+        function generateHashtags() {
+            const keyword = document.getElementById('hashtag-keyword').value;
+            const platform = document.getElementById('hashtag-platform').value;
+            const count = document.getElementById('hashtag-count').value;
+            
+            if (!keyword) {
+                alert('Please enter a keyword or topic');
+                return;
+            }
+            
+            // In a real implementation, you would have a database of hashtags
+            // This is just a placeholder for the demo
+            const hashtags = [];
+            const cleanedKeyword = keyword.trim().toLowerCase().replace(/\s+/g, '');
+            
+            // Generate some sample hashtags based on the keyword
+            for (let i = 0; i < count; i++) {
+                if (i < 5) {
+                    hashtags.push(`#${cleanedKeyword}`);
+                } else if (i < 10) {
+                    hashtags.push(`#${cleanedKeyword}${Math.floor(Math.random() * 100)}`);
+                } else {
+                    const suffixes = ['love', 'life', 'art', 'photo', 'insta', 'pic', 'time', 'day', 'world', 'style'];
+                    hashtags.push(`#${cleanedKeyword}${suffixes[Math.floor(Math.random() * suffixes.length)]}`);
+                }
+            }
+            
+            // Shuffle and limit to requested count
+            const shuffledHashtags = hashtags.sort(() => 0.5 - Math.random()).slice(0, count);
+            
+            document.getElementById('generated-hashtags').innerHTML = `
+                <p style="margin-bottom: 10px;">Copy these hashtags for your ${platform} post:</p>
+                <div style="background: white; padding: 15px; border-radius: 5px; border: 1px solid #eee; word-wrap: break-word;">
+                    ${shuffledHashtags.join(' ')}
+                </div>
+            `;
+            
+            document.getElementById('hashtag-generator-result').style.display = 'block';
+        }
+        
+        function copyHashtags() {
+            const hashtagsText = document.getElementById('generated-hashtags').textContent;
+            navigator.clipboard.writeText(hashtagsText.trim()).then(() => {
+                alert('Hashtags copied to clipboard!');
+            });
+        }
+        
+        // Text to PDF functionality
+        function generatePDF() {
+            const text = document.getElementById('pdf-text').value;
+            const title = document.getElementById('pdf-title').value || 'Document';
+            const compression = document.getElementById('pdf-compression').value;
+            
+            if (!text) {
+                alert('Please enter some text to convert');
+                return;
+            }
+            
+            // In a real implementation, you would use a PDF generation library
+            // This is just a placeholder for the demo
+            const sizeEstimates = {
+                low: Math.round(text.length * 0.002) + ' KB',
+                medium: Math.round(text.length * 0.0015) + ' KB',
+                high: Math.round(text.length * 0.001) + ' KB'
+            };
+            
+            document.getElementById('pdf-download-info').innerHTML = `
+                <p><strong>Title:</strong> ${title}</p>
+                <p><strong>Compression:</strong> ${compression} (Estimated size: ${sizeEstimates[compression]})</p>
+                <p><strong>Pages:</strong> ${Math.ceil(text.length / 2000)}</p>
+            `;
+            
+            // Create a dummy download link
+            const blob = new Blob([text], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.getElementById('pdf-download-link');
+            downloadLink.href = url;
+            downloadLink.download = `${title.replace(/\s+/g, '-')}.pdf`;
+            
+            document.getElementById('pdf-generator-result').style.display = 'block';
+        }
+        
+        // Age Calculator functionality
+        function calculateAge() {
+            const birthDate = new Date(document.getElementById('birth-date').value);
+            const currentDate = new Date(document.getElementById('current-date').value || new Date());
+            
+            if (!birthDate.getTime()) {
+                alert('Please enter your birth date');
+                return;
+            }
+            
+            if (birthDate > currentDate) {
+                alert('Birth date cannot be in the future');
+                return;
+            }
+            
+            let years = currentDate.getFullYear() - birthDate.getFullYear();
+            let months = currentDate.getMonth() - birthDate.getMonth();
+            let days = currentDate.getDate() - birthDate.getDate();
+            
+            if (days < 0) {
+                months--;
+                // Get the last day of the previous month
+                const prevMonthLastDay = new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    0
+                ).getDate();
+                days += prevMonthLastDay;
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Calculate total days
+            const diffTime = Math.abs(currentDate - birthDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('age-result').innerHTML = `
+                <p><strong>Age:</strong> ${years} years, ${months} months, ${days} days</p>
+                <p><strong>Total Days:</strong> ${diffDays} days</p>
+                <p><strong>Birth Date:</strong> ${birthDate.toDateString()}</p>
+                <p><strong>Current Date:</strong> ${currentDate.toDateString()}</p>
+            `;
+            
+            document.getElementById('age-calculator-result').style.display = 'block';
+        }
+        
+        // Text Case Converter functionality
+        function convertTextCase() {
+            const text = document.getElementById('case-text').value;
+            const caseType = document.getElementById('case-type').value;
+            
+            if (!text) {
+                alert('Please enter some text to convert');
+                return;
+            }
+            
+            let convertedText = '';
+            
+            switch (caseType) {
+                case 'upper':
+                    convertedText = text.toUpperCase();
+                    break;
+                case 'lower':
+                    convertedText = text.toLowerCase();
+                    break;
+                case 'sentence':
+                    convertedText = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+                    break;
+                case 'title':
+                    convertedText = text.replace(/\w\S*/g, function(txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    });
+                    break;
+                case 'camel':
+                    convertedText = text.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+                        if (+match === 0) return "";
+                        return index === 0 ? match.toLowerCase() : match.toUpperCase();
+                    }).replace(/\s+/g, '');
+                    break;
+                case 'pascal':
+                    convertedText = text.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match) {
+                        if (+match === 0) return "";
+                        return match.toUpperCase();
+                    }).replace(/\s+/g, '');
+                    break;
+                case 'snake':
+                    convertedText = text.toLowerCase().replace(/\s+/g, '_');
+                    break;
+                case 'kebab':
+                    convertedText = text.toLowerCase().replace(/\s+/g, '-');
+                    break;
+                case 'alternating':
+                    convertedText = text.split('').map((char, index) => 
+                        index % 2 === 0 ? char.toLowerCase() : char.toUpperCase()
+                    ).join('');
+                    break;
+                case 'inverse':
+                    convertedText = text.split('').map(char => {
+                        if (char === char.toUpperCase()) {
+                            return char.toLowerCase();
+                        } else {
+                            return char.toUpperCase();
+                        }
+                    }).join('');
+                    break;
+                default:
+                    convertedText = text;
+            }
+            
+            document.getElementById('converted-text').textContent = convertedText;
+            document.getElementById('case-converter-result').style.display = 'block';
+        }
+        
+        function copyConvertedText() {
+            const convertedText = document.getElementById('converted-text').textContent;
+            navigator.clipboard.writeText(convertedText).then(() => {
+                alert('Converted text copied to clipboard!');
+            });
+        }
+        
+        // Meta Tag Generator functionality
+        document.getElementById('meta-viewport').addEventListener('change', function() {
+            const customViewportGroup = document.getElementById('custom-viewport-group');
+            if (this.value === 'custom') {
+                customViewportGroup.style.display = 'block';
+            } else {
+                customViewportGroup.style.display = 'none';
+            }
+        });
+        
+        function generateMetaTags() {
+            const title = document.getElementById('meta-title').value;
+            const description = document.getElementById('meta-description').value;
+            const keywords = document.getElementById('meta-keywords').value;
+            const author = document.getElementById('meta-author').value;
+            const viewportType = document.getElementById('meta-viewport').value;
+            
+            if (!title) {
+                alert('Please enter a page title');
+                return;
+            }
+            
+            let viewportContent = '';
+            switch (viewportType) {
+                case 'responsive':
+                    viewportContent = 'width=device-width, initial-scale=1.0';
+                    break;
+                case 'desktop':
+                    viewportContent = 'width=1200';
+                    break;
+                case 'mobile':
+                    viewportContent = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                    break;
+                case 'custom':
+                    viewportContent = document.getElementById('custom-viewport').value || 'width=device-width, initial-scale=1.0';
+                    break;
+            }
+            
+            let metaTags = `<!-- Primary Meta Tags -->
+<title>${title}</title>
+<meta name="title" content="${title}">
+<meta name="description" content="${description || 'No description provided'}">`;
+            
+            if (keywords) {
+                metaTags += `
+<meta name="keywords" content="${keywords}">`;
+            }
+            
+            if (author) {
+                metaTags += `
+<meta name="author" content="${author}">`;
+            }
+            
+            metaTags += `
+<meta name="viewport" content="${viewportContent}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourwebsite.com/">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description || 'No description provided'}">
+<meta property="og:image" content="https://yourwebsite.com/images/social-preview.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://yourwebsite.com/">
+<meta property="twitter:title" content="${title}">
+<meta property="twitter:description" content="${description || 'No description provided'}">
+<meta property="twitter:image" content="https://yourwebsite.com/images/social-preview.jpg">`;
+            
+            document.getElementById('generated-meta-tags').textContent = metaTags;
+            document.getElementById('meta-tag-generator-result').style.display = 'block';
+        }
+        
+        function copyMetaTags() {
+            const metaTags = document.getElementById('generated-meta-tags').textContent;
+            navigator.clipboard.writeText(metaTags).then(() => {
+                alert('Meta tags copied to clipboard!');
+            });
+        }
+        
+        // Robots.txt Generator functionality
+        let robotsRuleCount = 1;
+        
+        function addRobotsRule() {
+            const container = document.getElementById('robots-rules-container');
+            const newRule = document.createElement('div');
+            newRule.className = 'robots-rule';
+            newRule.style.marginTop = '15px';
+            newRule.style.padding = '15px';
+            newRule.style.border = '1px solid #eee';
+            newRule.style.borderRadius = '5px';
+            
+            newRule.innerHTML = `
+                <select class="form-control robots-user-agent" style="margin-bottom: 10px;">
+                    <option value="*">All User-agents (*)</option>
+                    <option value="Googlebot">Googlebot</option>
+                    <option value="Bingbot">Bingbot</option>
+                    <option value="Slurp">Yahoo Slurp</option>
+                    <option value="DuckDuckBot">DuckDuckBot</option>
+                    <option value="Baiduspider">Baiduspider</option>
+                    <option value="YandexBot">YandexBot</option>
+                </select>
+                <div class="form-check" style="margin-bottom: 10px;">
+                    <input class="form-check-input" type="radio" name="rule-type-${robotsRuleCount}" value="allow" checked>
+                    <label class="form-check-label">Allow</label>
+                </div>
+                <div class="form-check" style="margin-bottom: 10px;">
+                    <input class="form-check-input" type="radio" name="rule-type-${robotsRuleCount}" value="disallow">
+                    <label class="form-check-label">Disallow</label>
+                </div>
+                <input type="text" class="form-control robots-path" placeholder="/path/">
+                <button class="btn btn-sm" onclick="removeRobotsRule(this)" style="margin-top: 5px; background-color: var(--danger-color);">Remove Rule</button>
+            `;
+            
+            container.appendChild(newRule);
+            robotsRuleCount++;
+        }
+        
+        function removeRobotsRule(button) {
+            button.parentElement.remove();
+        }
+        
+        function generateRobotsTxt() {
+            const sitemapUrl = document.getElementById('robots-sitemap').value;
+            const crawlDelay = document.getElementById('robots-crawl-delay').value;
+            
+            const rules = [];
+            const ruleElements = document.querySelectorAll('.robots-rule');
+            
+            ruleElements.forEach(ruleElement => {
+                const userAgent = ruleElement.querySelector('.robots-user-agent').value;
+                const ruleType = ruleElement.querySelector('input[type="radio"]:checked').value;
+                const path = ruleElement.querySelector('.robots-path').value || '/';
+                
+                rules.push(`User-agent: ${userAgent}`);
+                rules.push(`${ruleType}: ${path}`);
+                rules.push('');
+            });
+            
+            let robotsTxt = rules.join('\n');
+            
+            if (sitemapUrl) {
+                robotsTxt += `\n\nSitemap: ${sitemapUrl}`;
+            }
+            
+            if (crawlDelay) {
+                robotsTxt = `Crawl-delay: ${crawlDelay}\n\n` + robotsTxt;
+            }
+            
+            document.getElementById('generated-robots-txt').textContent = robotsTxt;
+            
+            // Create download link
+            const blob = new Blob([robotsTxt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.getElementById('robots-download-link');
+            downloadLink.href = url;
+            downloadLink.download = 'robots.txt';
+            
+            document.getElementById('robots-generator-result').style.display = 'block';
+        }
+        
+        function copyRobotsTxt() {
+            const robotsTxt = document.getElementById('generated-robots-txt').textContent;
+            navigator.clipboard.writeText(robotsTxt).then(() => {
+                alert('robots.txt copied to clipboard!');
+            });
+        }
+        
+        // XML Sitemap Generator functionality
+        function generateSitemap() {
+            const urlsText = document.getElementById('sitemap-urls').value;
+            const priority = document.getElementById('sitemap-priority').value;
+            const changeFreq = document.getElementById('sitemap-change-freq').value;
+            
+            if (!urlsText) {
+                alert('Please enter at least one URL');
+                return;
+            }
+            
+            const urls = urlsText.split('\n').filter(url => url.trim() !== '');
+            
+            let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+            
+            urls.forEach(url => {
+                sitemap += `
+    <url>
+        <loc>${url.trim()}</loc>
+        <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+        <changefreq>${changeFreq}</changefreq>
+        <priority>${priority}</priority>
+    </url>`;
+            });
+            
+            sitemap += `
+</urlset>`;
+            
+            document.getElementById('generated-sitemap').textContent = sitemap;
+            
+            // Create download link
+            const blob = new Blob([sitemap], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.getElementById('sitemap-download-link');
+            downloadLink.href = url;
+            downloadLink.download = 'sitemap.xml';
+            
+            document.getElementById('sitemap-generator-result').style.display = 'block';
+        }
+        
+        function copySitemap() {
+            const sitemap = document.getElementById('generated-sitemap').textContent;
+            navigator.clipboard.writeText(sitemap).then(() => {
+                alert('XML sitemap copied to clipboard!');
+            });
+        }
+        
+        // Google Index Checker functionality
+        function checkGoogleIndex() {
+            const url = document.getElementById('index-url').value;
+            
+            if (!url) {
+                alert('Please enter a URL to check');
+                return;
+            }
+            
+            // In a real implementation, you would call an API to check Google index status
+            // This is just a placeholder for the demo
+            const isIndexed = Math.random() > 0.3; // 70% chance of being indexed for demo
+            
+            document.getElementById('index-check-results').innerHTML = `
+                <p><strong>URL:</strong> ${url}</p>
+                <p><strong>Index Status:</strong> ${isIndexed ? '<span style="color: var(--success-color);">Indexed</span>' : '<span style="color: var(--danger-color);">Not Indexed</span>'}</p>
+                ${isIndexed ? '' : '<p style="margin-top: 15px;">This URL is not indexed by Google. Consider submitting it through Google Search Console.</p>'}
+                <div style="margin-top: 20px; background: #f0f0f0; padding: 15px; border-radius: 5px;">
+                    <h5 style="margin-bottom: 10px;">Recommendations:</h5>
+                    <ul>
+                        <li>Ensure the page has quality content</li>
+                        <li>Check for noindex tags in the page source</li>
+                        <li>Submit the URL through Google Search Console</li>
+                        <li>Build internal links to this page</li>
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('index-checker-result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
